@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>سوق الأغراض المستعملة</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .product {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      width: 300px;
+      padding: 15px;
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .product-name {
+      font-size: 18px;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+    .rating {
+      margin-top: 10px;
+    }
+    .star {
+      font-size: 25px;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.3s;
+      user-select: none;
+    }
+    .star.selected,
+    .star.hovered {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>سوق الأغراض المستعملة</h1>
+
+  <div class="product-list">
+
+    <div class="product" data-product-id="1">
+      <img src="https://i.imgur.com/8vWLYX9.jpg" alt="كرسي مكتب" />
+      <div class="product-name">كرسي مكتب مستعمل</div>
+      <div class="rating" data-rating="0">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+      </div>
+    </div>
+
+    <div class="product" data-product-id="2">
+      <img src="https://i.imgur.com/LtA3QHZ.jpg" alt="طاولة خشبية" />
+      <div class="product-name">طاولة خشبية</div>
+      <div class="rating" data-rating="0">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // نظام تقييم النجوم
+    document.querySelectorAll('.rating').forEach(ratingDiv => {
+      const stars = ratingDiv.querySelectorAll('.star');
+      let currentRating = 0;
+
+      stars.forEach(star => {
+        star.addEventListener('mouseenter', () => {
+          stars.forEach(s => s.classList.remove('hovered'));
+          for(let i = 0; i < star.dataset.value; i++) {
+            stars[i].classList.add('hovered');
+          }
+        });
+        star.addEventListener('mouseleave', () => {
+          stars.forEach(s => s.classList.remove('hovered'));
+          for(let i = 0; i < currentRating; i++) {
+            stars[i].classList.add('selected');
+          }
+        });
+        star.addEventListener('click', () => {
+          currentRating = star.dataset.value;
+          ratingDiv.dataset.rating = currentRating;
+          stars.forEach(s => s.classList.remove('selected'));
+          for(let i = 0; i < currentRating; i++) {
+            stars[i].classList.add('selected');
+          }
+          alert('تم تقييم المنتج بـ ' + currentRating + ' نجوم');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
